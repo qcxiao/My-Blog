@@ -8,3 +8,4 @@ sleep 1
 
 echo '开始启动项目.....'
 nohup java -jar /app.jar > /blog.log --spring.profiles.active=docker
+tail -f /blog.log
