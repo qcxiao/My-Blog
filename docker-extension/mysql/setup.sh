@@ -24,7 +24,6 @@ if [[ "$DATABASES" =~ "$DATABASE" ]];then
 
 echo '--------mysql容器重启--------'
 echo '2.数据库已存在,无需初始化数据....'
-exit
 else
 
 echo '--------mysql容器第一次启动--------'
@@ -47,7 +46,6 @@ echo '5.修改密码完毕....'
 #sleep 3
 echo `service mysql status`
 echo 'mysql容器启动完毕,且数据导入成功'
-exit
 fi
 
 tail -f /dev/null
