@@ -769,3 +769,9 @@ Spring Boot Version: 1.5.1.RELEASE (v1.5.1.RELEASE)
 2018-01-07 00:24:48.276 [http-nio-8080-exec-2] DEBUG org.thymeleaf.TemplateEngine - [THYMELEAF][http-nio-8080-exec-2] Finished process on template "admin/login" using mode "HTML5"
 2018-01-07 00:24:48.280 [http-nio-8080-exec-2] DEBUG org.thymeleaf.TemplateEngine - [THYMELEAF][http-nio-8080-exec-2] FINISHED PROCESS AND OUTPUT OF TEMPLATE "admin/login" WITH LOCALE zh_CN
 2018-01-07 00:24:48.281 [http-nio-8080-exec-2] DEBUG org.thymeleaf.TemplateEngine.TIMER - [THYMELEAF][http-nio-8080-exec-2][admin/login][zh_CN][231570115][232] TEMPLATE "admin/login" WITH LOCALE zh_CN PROCESSED IN 231570115 nanoseconds (approx. 232ms)
+2018-01-07 17:43:03.231 [http-nio-8080-exec-10] INFO  com.my.blog.website.interceptor.BaseInterceptor - UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+2018-01-07 17:43:03.232 [http-nio-8080-exec-10] INFO  com.my.blog.website.interceptor.BaseInterceptor - 用户访问地址: /, 来路地址: 0:0:0:0:0:0:0:1
+2018-01-07 18:25:55.206 [http-nio-8080-exec-1] INFO  com.my.blog.website.interceptor.BaseInterceptor - UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+2018-01-07 18:25:55.206 [http-nio-8080-exec-1] INFO  com.my.blog.website.interceptor.BaseInterceptor - 用户访问地址: /about, 来路地址: 0:0:0:0:0:0:0:1
+2018-01-07 18:29:57.537 [http-nio-8080-exec-2] INFO  com.my.blog.website.interceptor.BaseInterceptor - UserAgent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36
+2018-01-07 18:29:57.538 [http-nio-8080-exec-2] INFO  com.my.blog.website.interceptor.BaseInterceptor - 用户访问地址: /, 来路地址: 0:0:0:0:0:0:0:1
