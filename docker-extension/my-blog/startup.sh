@@ -4,7 +4,7 @@ set -e
 #因为要等待mysql用户和权限设置完成
 echo '等待mysql.....'
 
-sleep 5
+sleep 1
 
 echo '开始启动项目.....'
-nohup java -jar /app.jar --spring.profiles.active=docker > /blog.log
+nohup java -jar /app.jar > /blog.log --spring.profiles.active=docker
