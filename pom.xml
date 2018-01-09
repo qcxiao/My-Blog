@@ -6,7 +6,7 @@
     <groupId>com.my.blog.website</groupId>
     <artifactId>blog</artifactId>
     <!-- now -->
-    <version>3.3.0-SNAPSHOT</version>
+    <version>0.1</version>
     <!-- version的时间节点-->
     <!-- Tale -->
     <!--<version>0.0.1-SNAPSHOT</version>-->
@@ -27,8 +27,9 @@
     </parent>
 
     <properties>
-        <docker.image.prefix>yaodao</docker.image.prefix>
-        <docker.plugin.version>1.0.0</docker.plugin.version>
+        <docker.registry.url>registry.cn-hangzhou.aliyuncs.com</docker.registry.url>
+        <docker.registry.name>yaodao</docker.registry.name>
+        <docker.plugin.version>0.4.13</docker.plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -188,21 +189,50 @@
                 <version>${docker.plugin.version}</version>
                 <executions>
                     <execution>
-                        <phase>install</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
                     </execution>
+                    <!--<execution>
+                        <id>tag-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>tag</goal>
+                        </goals>
+                        <configuration>
+                            <image>${docker.registry.name}/${project.artifactId}:${project.version}</image>
+                            <newName>${docker.registry.url}/${docker.registry.name}/${project.artifactId}:${project.version}</newName>
+                        </configuration>
+                    </execution>-->
+                    <execution>
+                        <id>push-image</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>push</goal>
+                        </goals>
+                        <configuration>
+                            <imageName>${docker.registry.url}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
+                        </configuration>
+                    </execution>
                 </executions>
                 <configuration>
-                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>
-                    <dockerDirectory>${project.basedir}/docker-extension/my-blog</dockerDirectory>
+                    <!-- 私有仓库配置，需要settings.xml文件配合serverId对应的服务地址 -->
+                    <serverId>docker-aliyun</serverId>
+                    <registryUrl>registry.cn-hangzhou.aliyuncs.com</registryUrl>
+                    <!-- 设置为true时，mvn install也会上传到docker私服 -->
+                    <pushImage>true</pushImage>
+                    <dockerDirectory>${project.basedir}/src/docker/MyBlog</dockerDirectory>
+                    <imageName>
+                        ${docker.registry.url}/${docker.registry.name}/${project.artifactId}:${project.version}
+                    </imageName>
                     <resources>
-                        <resource>
+                        <rescource>
+                            <!-- 将打包文件放入dockerDirectory指定的位置 -->
                             <targetPath>/</targetPath>
                             <directory>${project.build.directory}</directory>
                             <include>${project.build.finalName}.jar</include>
-                        </resource>
+                        </rescource>
                     </resources>
                 </configuration>
             </plugin>
@@ -210,7 +240,7 @@
     </build>
     <!-- 结合docker的maven打包方式,并上传提交创建的镜像 -->
 
-    <!-- 公共仓库地址 -->
+    <!-- Maven公共仓库地址 -->
     <repositories>
         <repository>
             <id>aliyun</id>
