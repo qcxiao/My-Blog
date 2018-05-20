@@ -52,6 +52,13 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+
         <!-- Start: log4j2 -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
@@ -163,81 +170,74 @@
     </dependencies>
 
     <!-- 普通的maven打包方式 -->
-    <!--<build>-->
-        <!--<plugins>-->
-            <!--<plugin>-->
-                <!--<groupId>org.springframework.boot</groupId>-->
-                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<fork>true</fork>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-        <!--</plugins>-->
-    <!--</build>-->
-    <!-- 普通的maven打包方式 -->
-
-    <!-- 结合docker的maven打包方式,并上传提交创建的镜像 -->
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>${docker.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                    <!--<execution>
-                        <id>tag-image</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>tag</goal>
-                        </goals>
-                        <configuration>
-                            <image>${docker.registry.name}/${project.artifactId}:${project.version}</image>
-                            <newName>${docker.registry.url}/${docker.registry.name}/${project.artifactId}:${project.version}</newName>
-                        </configuration>
-                    </execution>-->
-                    <execution>
-                        <id>push-image</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>push</goal>
-                        </goals>
-                        <configuration>
-                            <imageName>${docker.registry.url}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>
-                        </configuration>
-                    </execution>
-                </executions>
                 <configuration>
-                    <!-- 私有仓库配置，需要settings.xml文件配合serverId对应的服务地址 -->
-                    <serverId>docker-aliyun</serverId>
-                    <registryUrl>registry.cn-hangzhou.aliyuncs.com</registryUrl>
-                    <!-- 设置为true时，mvn install也会上传到docker私服 -->
-                    <pushImage>true</pushImage>
-                    <dockerDirectory>${project.basedir}/src/docker/MyBlog</dockerDirectory>
-                    <imageName>
-                        ${docker.registry.url}/${docker.registry.name}/${project.artifactId}:${project.version}
-                    </imageName>
-                    <resources>
-                        <rescource>
-                            <!-- 将打包文件放入dockerDirectory指定的位置 -->
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.jar</include>
-                        </rescource>
-                    </resources>
+                    <!--fork:如果没有该项配置devtools不会起作用，即应用不会restart -->
+                    <fork>true</fork>
+                    <!--支持静态文件热部署-->
+                    <addResources>true</addResources>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+    <!-- 普通的maven打包方式 -->
+
+    <!-- 结合docker的maven打包方式,并上传提交创建的镜像 -->
+    <!--<build>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>com.spotify</groupId>-->
+                <!--<artifactId>docker-maven-plugin</artifactId>-->
+                <!--<version>${docker.plugin.version}</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>build</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                    <!--<execution>-->
+                        <!--<id>push-image</id>-->
+                        <!--<phase>deploy</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>push</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<imageName>${docker.registry.url}/${docker.registry.name}/${project.artifactId}:${project.version}</imageName>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--&lt;!&ndash; 私有仓库配置，需要settings.xml文件配合serverId对应的服务地址 &ndash;&gt;-->
+                    <!--<serverId>docker-aliyun</serverId>-->
+                    <!--<registryUrl>registry.cn-hangzhou.aliyuncs.com</registryUrl>-->
+                    <!--&lt;!&ndash; 设置为true时，mvn install也会上传到docker私服 &ndash;&gt;-->
+                    <!--<pushImage>true</pushImage>-->
+                    <!--&lt;!&ndash; 指定DockerFile的路径 &ndash;&gt;-->
+                    <!--<dockerDirectory>${project.basedir}/src/docker/MyBlog</dockerDirectory>-->
+                    <!--<imageName>-->
+                        <!--${docker.registry.url}/${docker.registry.name}/${project.artifactId}:${project.version}-->
+                    <!--</imageName>-->
+                    <!--<resources>-->
+                        <!--<rescource>-->
+                            <!--&lt;!&ndash; 将打包文件放入dockerDirectory指定的路径 &ndash;&gt;-->
+                            <!--<targetPath>/</targetPath>-->
+                            <!--<directory>${project.build.directory}</directory>-->
+                            <!--<include>${project.build.finalName}.jar</include>-->
+                        <!--</rescource>-->
+                    <!--</resources>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</build>-->
     <!-- 结合docker的maven打包方式,并上传提交创建的镜像 -->
 
     <!-- Maven公共仓库地址 -->
